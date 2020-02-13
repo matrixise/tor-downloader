@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+docker exec tor_redis_1 redis-cli -h redis -n 1 -a 'secret-passwd' --no-auth-warning lpush pending $1

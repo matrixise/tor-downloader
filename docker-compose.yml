@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  tor:
+    image: peterdavehello/tor-socks-proxy
+
+  worker:
+    # image: vimagick/youtube-worker
+    build: youtube-worker
+    links:
+      - redis
+      - tor
+    user: $UID:$GID
+    volumes:
+      - ./data:/data
+    environment:
+      - DATABASE=1
+      - PASSWORD=secret-passwd
+
+  redis:
+    image: redis
+    command: redis-server --requirepass 'secret-passwd'
+    ports:
+      - 6379:6379
